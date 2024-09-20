@@ -1,5 +1,6 @@
 import Login from "../Login"
-import SignUp from "../SignUp/registeration"
+import EmailOTP from "../OTP/otpverification"
+// import SignUp from "../SignUp/registeration"
 import MainLayout from "/src/layouts/MainLayout"
 
 const Home = () => {
@@ -13,6 +14,9 @@ const Home = () => {
       </div>
       <div>
         {/* <SignUp/> */}
+      </div>
+      <div>
+        <EmailOTP/>
       </div>
     </MainLayout>
   )
