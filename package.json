@@ -1,0 +1,17 @@
+{
+  "name": "igram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Backend/index.js",
+  "scripts": {
+    "start": "cd Backend && node index.js",
+    "dev": "cd Backend && nodemon index.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.6"
+  }
+}

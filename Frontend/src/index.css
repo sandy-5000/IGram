@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+  @apply transition-colors duration-200;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+#root {
+  @apply h-screen;
+}
+
+.app-blue {
+  background-color: #0284c7;
+}
+
+.app-blue-dark {
+  background-color: #0ea5e9;
+}
+
+.a-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.v-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
