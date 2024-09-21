@@ -8,6 +8,8 @@ import {
 import './index.css'
 import Home from "/src/pages/Home"
 import Login from '/src/pages/Login'
+import SignUp from '/src/pages/SignUp'
+import EmailOTP from '/src/pages/OTP'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/reset-password',
+    element: <EmailOTP />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
   },
 ])
 
