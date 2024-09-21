@@ -1,9 +1,20 @@
 import { PropTypes } from "prop-types"
 import ThemeButton from "/src/components/ThemeButton"
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import Auth from "/src/components/Auth"
+import { Context } from "/src/context"
+import { Navigate } from "react-router-dom"
 
 const AuthLayout = ({ children }) => {
   const [darkMode, setDarkMode] = useState(true)
+  const [user] = useContext(Context)
+
+  if (user.loading) {
+    return <Auth />
+  }
+  if (user.loggedIn) {
+    return <Navigate to="/home" replace={true} />
+  }
 
   return (
     <div className={`${darkMode ? 'dark' : 'light'}`}>
@@ -12,6 +23,7 @@ const AuthLayout = ({ children }) => {
           {children}
         </div>
       </div>
+      <Auth />
       <ThemeButton
         isDarkMode={darkMode}
         toggle={() => setDarkMode(!darkMode)}

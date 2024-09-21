@@ -1,15 +1,17 @@
 import { useState } from "react"
 import { FaRegEyeSlash } from "react-icons/fa"
 import { useFormik } from "formik"
-import { SignUp_Yup } from "./Yup.jsx"
+import { Yup } from "./Yup.jsx"
 import { FaRegEye } from "react-icons/fa"
 import { Link, } from "react-router-dom"
 import AuthLayout from "/src/layouts/AuthLayout"
 import Logo from "/src/components/Logo"
+import backend from "/src/services/backend"
+import { useNavigate } from "react-router-dom"
 
 const Initial_SignUpValues = {
   email: "",
-  phonenumber: "",
+  username: "",
   password: "",
   ReTypePassword: "",
 }
@@ -17,6 +19,8 @@ const Initial_SignUpValues = {
 const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [reTypePasswordVisible, setReTypePasswordVisible] = useState(false)
+  const navigate = useNavigate()
+  const [signUpError, setError] = useState(undefined)
   const {
     values,
     handleBlur,
@@ -26,9 +30,22 @@ const SignUp = () => {
     touched,
   } = useFormik({
     initialValues: Initial_SignUpValues,
-    validationSchema: SignUp_Yup,
+    validationSchema: Yup,
     onSubmit: (values) => {
-      console.log(values)
+      const { email: usermail, username, password, ReTypePassword: cpassword } = values
+      const body = { usermail, username, password, cpassword }
+      setError(undefined)
+      backend.post('/api/user/register', body)
+        .then(({ data }) => {
+          if (data.error) {
+            setError(data.error)
+            return
+          }
+          navigate('/login')
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   })
 
@@ -143,6 +160,13 @@ const SignUp = () => {
             >
               SignUp
             </button>
+            {
+              signUpError && (
+                <small className="text-red-500">
+                  {signUpError}
+                </small>
+              )
+            }
             <p className="sm:-ml-5 xs:text-sm text-sky-600 dark:text-sky-500">
               Already have an account?
               <Link className="text-gray-800 dark:text-gray-200 font-semibold" to="/login">

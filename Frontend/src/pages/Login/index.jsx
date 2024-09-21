@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { FaRegEyeSlash } from "react-icons/fa"
 import { useFormik } from "formik"
-import { Login_Yup } from "./loginYup.jsx"
+import { Yup } from "./Yup.jsx"
 import { FaRegEye } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import AuthLayout from "/src/layouts/AuthLayout"
 import Logo from "/src/components/Logo"
+import backend from "/src/services/backend"
+import { useNavigate } from "react-router-dom"
+import { Context } from "/src/context"
 
 const initial_Values = {
   email: "",
@@ -13,13 +16,35 @@ const initial_Values = {
 }
 
 const Login = () => {
+  const navigate = useNavigate()
+  const [, setUser] = useContext(Context)
   const [passWordVisible, setpassWordVisible] = useState(false)
+  const [error, setError] = useState(undefined)
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
       initialValues: initial_Values,
-      validationSchema: Login_Yup,
+      validationSchema: Yup,
       onSubmit: async (values) => {
-        console.log(values)
+        const { email: usermail, password } = values
+        const body = { usermail, password }
+        setError(undefined)
+        backend.post('/api/user/login', body)
+          .then(({ data }) => {
+            if (data.error) {
+              setError(data.error)
+              return
+            }
+            localStorage.setItem('token', data.jwt)
+            setUser({
+              loggedIn: true,
+              data,
+            })
+            navigate('/home', { replace: true })
+          })
+          .catch(error => {
+            setError('An Error occured')
+            console.log(error)
+          })
       },
     })
   const handleVisible = () => {
@@ -86,6 +111,13 @@ const Login = () => {
           >
             Login
           </button>
+          {
+            error && (
+              <small className="text-red-500">
+                {error}
+              </small>
+            )
+          }
           <p className="sm:-ml-5 xs:text-sm text-sky-600 dark:text-sky-500">
             Don&#39;t have an account?{" "}
             <Link className="text-gray-800 dark:text-gray-200 font-semibold" to="/signUp">

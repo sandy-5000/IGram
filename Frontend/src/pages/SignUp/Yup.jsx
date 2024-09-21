@@ -3,11 +3,11 @@ import * as yup from "yup"
 // const passwordregex = /^(?!.\s)(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$/
 const passwordregex = /^.{8,}$/
 const userNameRegex = /^[a-zA-Z0-9._]{5,24}$/
-const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+const usermail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-export const SignUp_Yup = yup.object({
+export const Yup = yup.object({
     email: yup.string()
-        .matches(email, "Invalid Email Format")
+        .matches(usermail, "Invalid Email Format")
         .required("Email is Required"),
     username: yup.string()
         .matches(userNameRegex, "username should only contains alphanumeric, _ and .")
