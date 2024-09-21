@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { PropTypes } from "prop-types"
 
 function FeedPage() {
   const posts = [
@@ -19,8 +20,8 @@ function FeedPage() {
   ];
 
   return (
-    <div className="bg-slat-800 min-h-screen flex flex-col items-center dark:text-[#2563eb]">
-      <h1 className="text-2xl font-bold my-6">Instagram Feed</h1>
+    <div className="bg-slat-800 min-h-screen flex flex-col items-center dark:text-sky-500">
+      <h1 className="text-2xl font-bold my-6">Feeds</h1>
       <div className="w-full max-w-lg">
         {posts.map((post) => (
           <Post key={post.id} post={post} />
@@ -74,9 +75,8 @@ function Post({ post }) {
         <div className="flex items-center space-x-4">
           <button
             onClick={handleLike}
-            className={`focus:outline-none transform transition-all duration-300 ${
-              liked ? 'scale-110 text-red-500' : 'scale-100'
-            }`}
+            className={`focus:outline-none transform transition-all duration-300 ${liked ? 'scale-110 text-red-500' : 'scale-100'
+              }`}
           >
             {liked ? (
               <svg
@@ -146,12 +146,16 @@ function Post({ post }) {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Add a comment..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 bg-gray-300 dark:bg-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </form>
       </div>
     </div>
   );
+}
+
+Post.propTypes = {
+  post: PropTypes.any,
 }
 
 export default FeedPage;
