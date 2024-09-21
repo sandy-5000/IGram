@@ -171,157 +171,321 @@
 // };
 // export default Profile;
 
+// import React, { useState } from 'react';
+
+// function ProfilePage() {
+//   const [formData, setFormData] = useState({
+//     firstName: '',
+//     lastName: '',
+//     email: '',
+//     phoneNumber: '',
+//     password: '',
+//     confirmPassword: '',
+//   });
+
+//   const [profilePic, setProfilePic] = useState(null);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   const handleImageUpload = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//         setProfilePic(reader.result);
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     // Add your form submission logic here
+//     if (formData.password !== formData.confirmPassword) {
+//       alert('Passwords do not match!');
+//       return;
+//     }
+//     console.log(formData, profilePic);
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-slat-800 dark:text-[#2563eb]">
+//       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md ">
+//         <h2 className="text-2xl font-bold mb-6 text-center">Profile Page</h2>
+
+//         <div className="flex flex-col items-center mb-6">
+//           {profilePic ? (
+//             <img
+//               src={profilePic}
+//               alt="Profile"
+//               className="w-24 h-24 rounded-full object-cover mb-4"
+//             />
+//           ) : (
+//             <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-4">
+//               <span className="text-gray-500">No Image</span>
+//             </div>
+//           )}
+
+//           <label className="block">
+//             <span className="sr-only">Choose profile picture</span>
+//             <input
+//               type="file"
+//               accept="image/*"
+//               onChange={handleImageUpload}
+//               className="block w-full text-sm text-gray-500
+//                         file:mr-4 file:py-2 file:px-4
+//                         file:rounded-full file:border-0
+//                         file:text-sm file:font-semibold
+//                         file:bg-blue-50 file:text-blue-700
+//                         hover:file:bg-blue-100"
+//             />
+//           </label>
+//         </div>
+
+//         <form onSubmit={handleSubmit}>
+//           <div className="mb-4 ">
+//             <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">First Name</label>
+//             <input
+//               type="text"
+//               name="firstName"
+//               value={formData.firstName}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]" >Last Name</label>
+//             <input
+//               type="text"
+//               name="lastName"
+//               value={formData.lastName}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Email Address</label>
+//             <input
+//               type="email"
+//               name="email"
+//               value={formData.email}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Phone Number</label>
+//             <input
+//               type="tel"
+//               name="phoneNumber"
+//               value={formData.phoneNumber}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Change Password</label>
+//             <input
+//               type="password"
+//               name="password"
+//               value={formData.password}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <div className="mb-4">
+//             <label className="block text-gray-700 font-bold mb-2 " >Confirm Password</label>
+//             <input
+//               type="password"
+//               name="confirmPassword"
+//               value={formData.confirmPassword}
+//               onChange={handleChange}
+//               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+//             />
+//           </div>
+
+//           <button
+//             type="submit"
+//             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+//           >
+//             Save Changes
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default ProfilePage;
+
 import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 function ProfilePage() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    confirmPassword: '',
-  });
-
   const [profilePic, setProfilePic] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleImageUpload = (e) => {
+  const handleImageUpload = (e, setFieldValue) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePic(reader.result);
+        setFieldValue('profilePic', file);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-    console.log(formData, profilePic);
-  };
+  // Define Yup validation schema
+  const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    phoneNumber: Yup.string()
+      .matches(/^[0-9]+$/, 'Phone number must be digits')
+      .min(10, 'Phone number must be at least 10 digits')
+      .required('Phone number is required'),
+    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm password is required'),
+    profilePic: Yup.mixed().required('Profile picture is required'),
+  });
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slat-800 dark:text-[#2563eb]">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md ">
+    <div className="min-h-screen flex items-center justify-center bg-salt-800 dark:text-[#2563eb]">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Profile Page</h2>
 
-        <div className="flex flex-col items-center mb-6">
-          {profilePic ? (
-            <img
-              src={profilePic}
-              alt="Profile"
-              className="w-24 h-24 rounded-full object-cover mb-4"
-            />
-          ) : (
-            <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-4">
-              <span className="text-gray-500">No Image</span>
-            </div>
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            confirmPassword: '',
+            profilePic: null,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          {({ setFieldValue }) => (
+            <Form>
+              <div className="flex flex-col items-center mb-6 ">
+                {profilePic ? (
+                  <img
+                    src={profilePic}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full object-cover mb-4"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-4">
+                    <span className="text-gray-500">No Image</span>
+                  </div>
+                )}
+
+                <label className="block">
+                  <span className="sr-only">Choose profile picture</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setFieldValue)}
+                    className="block w-full text-sm text-gray-500
+                              file:mr-4 file:py-2 file:px-4
+                              file:rounded-full file:border-0
+                              file:text-sm file:font-semibold
+                              file:bg-blue-50 file:text-blue-700
+                              hover:file:bg-blue-100"
+                  />
+                  <ErrorMessage name="profilePic" component="div" className="text-red-500 text-sm mt-1" />
+                </label>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">First Name</label>
+                <Field
+                  name="firstName"
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Last Name</label>
+                <Field
+                  name="lastName"
+                  type="text"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Email Address</label>
+                <Field
+                  name="email"
+                  type="email"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Phone Number</label>
+                <Field
+                  name="phoneNumber"
+                  type="tel"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Change Password</label>
+                <Field
+                  name="password"
+                  type="password"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Confirm Password</label>
+                <Field
+                  name="confirmPassword"
+                  type="password"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                />
+                <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1" />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              >
+                Save Changes
+              </button>
+            </Form>
           )}
-
-          <label className="block">
-            <span className="sr-only">Choose profile picture</span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="block w-full text-sm text-gray-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-blue-50 file:text-blue-700
-                        hover:file:bg-blue-100"
-            />
-          </label>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4 ">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]" >Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Email Address</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Phone Number</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Change Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]" >Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            Save Changes
-          </button>
-        </form>
+        </Formik>
       </div>
     </div>
   );
 }
 
 export default ProfilePage;
+
