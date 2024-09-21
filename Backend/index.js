@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 4000
 const HOST = process.env.HOST || 'localhost'
 const MONGO_URL = process.env.MONGO_URL
 
-app.get('/api', (req, res) => {
+app.get('/api', (_, res) => {
 	res.json({
 		message: 'Server [FaceGram]'
 	})
@@ -28,4 +28,4 @@ mongoose
 		console.log("DB Connected")
 		app.listen(PORT, () => console.log(`URL: http://${HOST}:${PORT}/api`))
 	})
-	.catch(() => console.log('DB NOT connected', e))
+	.catch((e) => console.log('DB NOT connected', e))
