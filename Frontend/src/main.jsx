@@ -11,6 +11,8 @@ import Login from '/src/pages/Login'
 import SignUp from '/src/pages/SignUp'
 import EmailOTP from '/src/pages/OTP'
 import Chat from '/src/pages/Chat'
+import Find from '/src/pages/Find'
+import Profile from '/src/pages/Profile'
 import { Context } from "/src/context"
 import { PropTypes } from "prop-types"
 
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUp />,
+  },
+  {
+    path: '/find',
+    element: <Find />,
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
   {
     path: '/chat',
