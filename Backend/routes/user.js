@@ -60,5 +60,27 @@ app.route('/profile')
         return res.status(200).json({ ...data.result?._doc, password: null })
     })
 
+app.route('/find')
+    .post(async (req, res) => {
+        const user = verify(req.headers)
+        if (!user) {
+            return res.status(200).json({ error: "not authorized" })
+        }
+        const { query } = req.body
+        const data = await userCtrl.find({ query })
+        return res.status(200).json(data)
+    })
+
+app.route('/add-friend')
+    .post(async (req, res) => {
+        const user = verify(req.headers)
+        if (!user) {
+            return res.status(200).json({ error: "not authorized" })
+        }
+        const { username_1, username_2 } = req.body
+        const data = await userCtrl.addFriend({ username_1, username_2 })
+        return res.status(200).json(data)
+    })
+
 const user = app
 export default user

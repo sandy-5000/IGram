@@ -12,7 +12,7 @@ import { CgProfile } from "react-icons/cg"
 
 const getNavIcon = ({ route, name, Icon }) => {
   return (
-    <Link to={route} className="p-1 pl-0 ml-1">
+    <Link key={name} to={route} className="p-1 pl-0 ml-1">
       <div className="ring-2 ring-sky-600 dark:ring-sky-500 rounded-md px-2 flex">
         <div className="a-center">
           {Icon}
@@ -27,7 +27,7 @@ const getNavIcon = ({ route, name, Icon }) => {
 
 const MainLayout = ({ children }) => {
   const navigate = useNavigate()
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('dark') === 'true')
   const [user, setUser] = useContext(Context)
 
   if (user.loading) {
@@ -76,7 +76,12 @@ const MainLayout = ({ children }) => {
       <Auth />
       <ThemeButton
         isDarkMode={darkMode}
-        toggle={() => setDarkMode(!darkMode)}
+        toggle={
+          () => {
+            setDarkMode(!darkMode)
+            localStorage.setItem('dark', !darkMode)
+          }
+        }
       />
     </div>
 

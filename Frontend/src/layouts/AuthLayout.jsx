@@ -6,7 +6,7 @@ import { Context } from "/src/context"
 import { Navigate } from "react-router-dom"
 
 const AuthLayout = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('dark') === 'true')
   const [user] = useContext(Context)
 
   if (user.loading) {
@@ -26,7 +26,12 @@ const AuthLayout = ({ children }) => {
       <Auth />
       <ThemeButton
         isDarkMode={darkMode}
-        toggle={() => setDarkMode(!darkMode)}
+        toggle={
+          () => {
+            setDarkMode(!darkMode)
+            localStorage.setItem('dark', !darkMode)
+          }
+        }
       />
     </div>
 
