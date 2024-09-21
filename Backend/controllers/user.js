@@ -8,13 +8,17 @@ export default function UserController() {
             if (!user) {
                 return { status: 404, result: null }
             }
-            return { status: 200, result: user }
+            const last_login = user.last_login
+            user.last_login = Date().toString()
+            await user.save()
+            return { status: 200, result: {...user, last_login} }
         },
         createUser: async function ({ username, usermail, password }) {
             let user = new IGUser({
                 username,
                 usermail,
                 password,
+                last_login: Date().toString(),
             })
             let errors = {
                 11000: 'User already exists!'

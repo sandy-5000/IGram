@@ -8,6 +8,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { RiSearchLine } from "react-icons/ri"
 import { CgProfile } from "react-icons/cg"
+import { FaBell } from "react-icons/fa"
 
 
 const getNavIcon = ({ route, name, Icon }) => {
@@ -58,6 +59,7 @@ const MainLayout = ({ children }) => {
                 [
                   { name: 'Find', route: '/find', Icon: <RiSearchLine className="text-slate-800 dark:text-slate-200" /> },
                   { name: 'Profile', route: '/profile', Icon: <CgProfile className="text-slate-800 dark:text-slate-200" /> },
+                  { name: '3', route: null, Icon: <FaBell className="text-slate-800 dark:text-slate-200" /> },
                 ].map(x => getNavIcon(x))
               }
             </div>

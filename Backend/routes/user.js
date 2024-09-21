@@ -21,6 +21,7 @@ app.route('/login')
         if (data.status == 404) {
             return res.status(200).json({ error: 'Usermail or password incorrect' })
         }
+        console.log(data.result)
         const tokenData = {
             _id: data.result._id,
             username: data.result.username,

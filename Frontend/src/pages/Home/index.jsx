@@ -6,7 +6,7 @@ import { Context } from "/src/context"
 
 const Home = () => {
   const [user] = useContext(Context)
-  const [lastLogin, setLastLogin] = useState('September 20, 2024 10:00 AM');
+  const [lastLogin, setLastLogin] = useState(null)
   const [activities] = useState([
     { id: 1, description: 'Liked a post', time: '2 hours ago' },
     { id: 2, description: 'Commented on a photo', time: '3 hours ago' },
@@ -24,12 +24,6 @@ const Home = () => {
   )
 
   useEffect(() => {
-    setTimeout(() => {
-      setLastLogin('September 21, 2024 9:00 AM');
-    }, 1000)
-  }, [])
-
-  useEffect(() => {
     if (user?.data?.friends) {
       setFriends(user.data.friends.map((x, index) => {
         return {
@@ -39,6 +33,7 @@ const Home = () => {
         }
       }))
     }
+    setLastLogin(user?.data?.last_login)
   }, [user])
 
   return (

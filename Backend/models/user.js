@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    last_login: {
+        type: String,
+        required: true,
+    },
     friends: {
         type: [{
             type: String,
