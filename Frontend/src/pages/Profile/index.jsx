@@ -443,15 +443,7 @@ function ProfilePage() {
                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
               </div>
 
-              <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Phone Number</label>
-                <Field
-                  name="phoneNumber"
-                  type="tel"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                />
-                <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-sm mt-1" />
-              </div>
+
 
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2 dark:text-[#2563eb]">Change Password</label>

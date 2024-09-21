@@ -1,5 +1,5 @@
 
-import Profile from "../Profile"
+import Feed from "../Feeds/index.jsx"
 import MainLayout from "/src/layouts/MainLayout"
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
         <p className="text-gray-800 dark:text-gray-200">Home!</p>
       </div>
       <div>
-        <Profile/>
+        <Feed/>
       </div>
 
     </MainLayout>
