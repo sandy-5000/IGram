@@ -39,7 +39,7 @@ const Login = () => {
               loggedIn: true,
               data,
             })
-            navigate('/home', { replace: true })
+            navigate('/otp', { replace: true })
           })
           .catch(error => {
             setError('An Error occured')
@@ -98,7 +98,7 @@ const Login = () => {
               <small className="text-red-500">{errors.password}</small>
             ) : null}
           </div>
-          <Link className="text-sky-600 dark:text-sky-500" to="/reset-password">
+          <Link className="text-sky-600 dark:text-sky-500">
             Forget Password?
           </Link>
           <button

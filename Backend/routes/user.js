@@ -5,6 +5,7 @@ import verify from "../utils/validate.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import dotenv from "dotenv"
+import sendMail from "../utils/mail.js"
 dotenv.config()
 
 const app = express.Router()
@@ -82,6 +83,23 @@ app.route('/add-friend')
         const data = await userCtrl.addFriend({ username_1, username_2 })
         return res.status(200).json(data)
     })
+
+app.route('/otp')
+    .post(async (req, res) => {
+        const { userMail, OTP } = req.body
+        const body = `your OTP is : ${OTP}`
+        const subject = "OTP"
+        sendMail({
+            receiverMail: userMail,
+            mailSubject: subject,
+            mailBody: body,
+        }, (data) => {
+            console.log(data)
+            res.status(200).json({ data })
+        })
+
+    })
+
 
 const user = app
 export default user

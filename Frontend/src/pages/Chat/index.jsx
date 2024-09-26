@@ -4,8 +4,8 @@ import { RiSendPlaneFill } from "react-icons/ri"
 const getMessage = () => {
   return (
     <div className="bg-gray-300 dark:bg-gray-700 p-4 rounded text-sm text-gray-700 dark:text-gray-300">
-      <p className="font-semibold">Vikram Mehta:</p>
-      <p>110 / 500 or video kab daalooge</p>
+      <p className="font-semibold">Vamsi: </p>
+      <p>Hii</p>
       <p className="text-xs text-gray-500 mt-2">19:36</p>
     </div>
   )

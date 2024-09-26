@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/reset-password',
+    path: '/otp',
     element: <EmailOTP />,
   },
   {
